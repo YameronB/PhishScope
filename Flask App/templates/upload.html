@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishScope - Upload Email</title>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css', v=current_time) }}">
+    
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" crossorigin="anonymous">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.svg') }}">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="" class="current">Upload</a></li>
+            <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+            <li><a href="{{ url_for('chatbot') }}">Chatbot</a></li>
+            <li><a href="{{ url_for('manage_blacklist') }}">Blacklist</a></li>
+            <li><a href="{{ url_for('feedback') }}">Feedback</a></li>
+        </ul>
+    </nav>
+
+    
+    <div class="container">
+        <img src="{{ url_for('static', filename='phishscope14.svg') }}" alt="PhishScope" draggable="false">
+        <div class="description">
+            <p>
+                <i>Analysis tool for phishing emails, files, and URLs for malicious content.</i>
+            </p>
+        </div>
+
+        <!-- Mini Navbar/tab for Selecting Email, File, or URL -->
+        <div id="mini-nav">
+            <button class="current-tab" onclick="showContent('email-upload')">Email Upload</button>
+            <button onclick="showContent('attachment-scanner')">Attachment Scanner</button>
+            <button onclick="showContent('url-scanner')">URL Check</button>
+        </div>
+
+        <!-- Content for Email Upload tab -->
+        <div class="custom-container" id="email-upload">
+            <header>Upload Your Email File</header>
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <div class="file-upload">
+                    <div class="img1">
+                        <i class="fa-solid fa-file"></i>
+                    </div>
+                    <input type="file" name="file">
+                </div>
+                <button type="submit">Upload</button>
+            </form>
+        </div>
+
+        <!-- Results for Email Upload -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <!-- Modal -->
+            <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="messageModalLabel">Results</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            {% for category, message in messages %}
+                                {{ message }}<br>
+                            {% endfor %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JavaScript to show modal -->
+            <script>
+                $(document).ready(function() {
+                    $('#messageModal').modal('show');
+                });
+            </script>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Content for Attachment Scanner tab -->
+        <div class="custom-container" id="attachment-scanner" style="display: none;">
+            <header>Upload Your Attachment</header>
+            <form action="/attachment-upload" method="post" enctype="multipart/form-data">
+                <div class="file-upload">
+                    <div class="img1">
+                        <i class="fa-solid fa-file"></i>
+                    </div>
+                    <input type="file" name="attachment">
+                </div>
+                <button type="submit">Upload</button>     
+            </form>
+        </div>
+
+        <!-- Results for Attachment -->
+        {% if show_results %}
+        <!-- Modal -->
+        <div class="modal fade" id="resultsModal" tabindex="-1" role="dialog" aria-labelledby="resultsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="resultsModalLabel">Scan Results</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <p>Malicious: {{ stats.malicious }}</p>
+                        <p>Suspicious: {{ stats.suspicious }}</p>
+                        <p>Undetected: {{ stats.undetected }}</p>
+                        <p>Harmless: {{ stats.harmless }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function() {
+            $('#resultsModal').modal('show');
+        });
+        </script>
+        {% endif %}
+
+        <!-- Content for URL Scanner tab -->
+        <div class="custom-container" id="url-scanner" style="display: none;">
+            <form action="/url" method="post" id="url-form">
+                <input type="text" name="url" id="url-input" placeholder="Detect if a URL is malicious:">
+                <input type="submit" value="Check URL">
+            </form>
+        </div>
+
+        <!-- Results for URL Scanner -->
+        {% if show_url_results %}
+        <!-- Modal -->
+        <div class="modal fade" id="urlResultsModal" tabindex="-1" role="dialog" aria-labelledby="urlResultsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="urlResultsModalLabel">URL Scan Results</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <p>Malicious: {{ stats.malicious }}</p>
+                        <p>Suspicious: {{ stats.suspicious }}</p>
+                        <p>Undetected: {{ stats.undetected }}</p>
+                        <p>Harmless: {{ stats.harmless }}</p>
+                        <h4>WHOIS Information</h4>
+                        <p>Domain Registration Date: {{ creation_date }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function() {
+                $('#urlResultsModal').modal('show');
+            });
+        </script>
+        {% endif %}
+    </div>
+
+    <!-- Button to trigger modal -->
+    <br>
+    <div style="display: flex; justify-content: center;">
+        <button type="button" class="btn training-btn" data-toggle="modal" data-target="#trainingModal">
+            Access Phishing Email Training
+        </button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="trainingModal" tabindex="-1" aria-labelledby="trainingModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="trainingModalLabel">Phishing Email Training</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Would you like to access our phishing email training?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button id="optInButton" type="button" class="btn btn-primary">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript to handle modal interaction -->
+    <script>
+        document.getElementById("optInButton").addEventListener("click", function() {
+            // Redirect the user to the training pag
+            window.location.href = "training"; // Assuming the route for training page is '/training'
+            // Alternatively, you can show/hide elements to indicate access to training
+            // Example: document.getElementById("trainingLink").style.display = "block";
+        });
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='script.js', v=current_time) }}"></script>
+
+    <!-- JS for URL Checker -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("url-form").onsubmit = function(e) {
+                var urlInput = document.getElementById("url-input");
+                var url = urlInput.value;
+                if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                    alert('URL must start with http:// or https://');
+                    e.preventDefault(); // Prevent form submission
+                    return false;
+                }
+                return true;
+            };
+        });
+    </script>
+</body>
+</html>

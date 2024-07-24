@@ -1,0 +1,462 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+html{
+    height: 100%;
+    overflow: hidden;
+}
+
+body{
+    height: 100vh;
+    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+    margin: 0;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.container{
+    font-family: 'Poppins', sans-serif;
+    justify-content: center;
+    align-items: center;
+    font: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.container img{
+    width:750px;
+    height: auto;
+    margin: 20px 0;
+}
+
+
+.custom-container{
+    width: 430px;
+    background: #fff;
+    border-radius: 5px;
+    padding: 30px;
+    box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.5);
+    margin-top: 20px;
+}
+
+.custom-container header, .custom-container h4{
+    color: gray;
+    font-size: 27px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.custom-container .file-upload{
+    height: 167px;
+    display: flex;
+    cursor: pointer;
+    margin: 20px 0;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 5px;
+    border: 2px dashed gray;
+}
+
+.custom-container .img1{
+    font-size: 50px;
+    color: gray;
+}
+
+form p{
+    margin-top: 15px;
+    font-size: 16px;
+}
+
+button[type="submit"], #url-scanner input[type="submit"], .container2 input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button[type="submit"]:hover, #url-scanner input[type="submit"]:hover , .container2 input[type="submit"]:hover {
+    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+    color: #fff;
+}
+
+.description{
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    font-size: 1 rem;
+    cursor: default;
+    user-select: none;
+}
+
+/* Nav bar styling */
+nav li{
+    display: inline;
+    margin: 10px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+}
+
+nav li a, #mini-nav button{
+    text-decoration: none;
+    color: #C0C0C0;
+    font-size: 20px;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+    cursor: pointer;
+}
+
+nav li a::after, #mini-nav button::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: white;
+    bottom: 0;
+    left: 0;
+    transition: width 0s ease-in-out;
+}
+
+nav li a:hover::after, #mini-nav button:hover::after {
+    width: 100%;
+    transition: width 0.3s ease-in-out;
+}
+
+.current, .current-tab{
+    color: white;
+    cursor: default;
+    pointer-events: none;
+    border-bottom: 2px solid white;
+}
+
+nav li a:hover, #mini-nav button:hover{
+    color: white;
+    text-decoration: none;
+}
+
+nav ul{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* Mini nav bar styling */
+#mini-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#mini-nav button {
+    text-decoration: none;
+    color: #C0C0C0;
+    font-size: 20px;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0px;
+    margin: 0 15px;
+}
+
+#mini-nav button:focus {
+    outline: none;
+}
+
+#mini-nav .current-tab {
+    border-bottom: 2px solid white;
+    color: white;
+}
+
+/* url scanner */
+#url-scanner {
+    background-color: white;
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+#url-scanner p {
+    font-size: 18px;
+    color: gray;
+    margin-bottom: 10px;
+}
+
+#url-scanner form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#url-scanner input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+/* Feedback Page */
+.container2 {
+    width: 1000px;
+    margin: auto;
+    padding: 20px;
+    box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.5);
+    background-color: #f8f8f8;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 5px;
+}
+
+.container2 form {
+    display: flex;
+    flex-direction: column;
+}
+
+.container2 label {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+#email{
+    padding-left: 10px;
+}
+
+.container2 textarea {
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 15px;
+    border-radius: 10px;
+    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+    outline: none;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #C0C0C0;
+    cursor: pointer;
+}
+
+input[type=range]::-moz-range-thumb {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+textarea#feedback {
+    height: 200px; 
+    resize: none;
+}
+
+.parent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+}
+
+.training-btn{
+    background: white !important;
+    color: black !important;
+    font-family: 'Poppins', sans-serif;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none !important;
+    cursor: pointer;
+    font-size: 20px;
+    margin-top: 20px;
+    box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.5) !important;
+}
+
+
+.training-btn:hover{
+    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%) !important;
+    color: white !important;
+    border: 1px solid white !important;
+}
+
+.training-btn:active,
+.training-btn:focus,
+.training-btn:focus-visible {
+    outline: none !important;
+    border: none !important;
+    box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Analytics Page */
+.custom-container2{
+    width: 70%;
+    background: #fff;
+    border-radius: 5px;
+    padding: 30px;
+    box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.5);
+    margin-top: 20px;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+#download-pdf{
+    display: block;
+    background: #f0f0f0;
+    color: black;
+    font-family: 'Poppins', sans-serif;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    margin: 10px auto;
+    border: 1px solid #ccc;
+}
+
+#download-pdf:hover{
+    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+    color: white;
+}
+
+/* Chatbot Page */
+.custom-container3{
+    width: 750px;
+    background: #fff;
+    border-radius: 5px;
+    padding: 30px;
+    box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.5);
+    margin: auto;
+    margin-top: 10%;
+}
+
+#chatbox {
+    padding: 10px;
+    height: 300px;
+    overflow-y: auto;
+}
+
+#user_send_form {
+    display: flex;
+    justify-content: space-between;
+}
+#user_input {
+    flex-grow: 1;
+    margin-right: 10px;
+    width: 90%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #c0c0c0;
+
+}
+
+#user_send{
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #c0c0c0;
+    cursor: pointer;
+    width: 50px;
+}
+
+#user_send:hover{
+    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+    color: white;
+}
+
+#chatbox, #user_input{
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Blacklist Page */
+.custom-container4{
+    width: 750px;
+    background: #fff;
+    border-radius: 5px;
+    padding: 30px;
+    box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.5);
+    margin: auto;
+    margin-top: 10%;
+    font-family: 'Poppins', sans-serif;
+}
+
+.blacklist-form{
+    display: flex;
+    justify-content: space-between;
+}
+
+.blacklistemail{
+    flex-grow: 1;
+    margin-right: 10px;
+    width: 350%;
+    padding-left: 10px;
+}
+
+.blacklist-btn{
+   width: 10px;
+}
+
+#blacklist-toggle{
+    display: block;
+    background: #f0f0f0;
+    color: black;
+    font-family: 'Poppins', sans-serif;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+}
+
+#blacklist-toggle:hover{
+    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    border: none;
+}
+
+#blacklist-list li {
+    list-style-type: none;
+}
+
+/* Training Page */
+.custom-container5{
+    width: 800px;
+    background: #fff;
+    border-radius: 5px;
+    padding: 30px;
+    box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.5);
+    margin: 10px auto;
+    font-family: 'Poppins', sans-serif;
+}
+
+.question{
+    font-size: 15px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+.explanation, .wrong, .correctanswer{
+    display: none;
+}
+

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Email Training</title>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css', v=current_time) }}">
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" crossorigin="anonymous">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.svg') }}">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css', v=current_time) }}">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index')}}">◄ Go Back</a></li>
+        </ul>
+    </nav>
+    <div class="custom-container5">
+        <h1 style="text-align: center;">Phishing Email Training</h1>
+        <img src="/static/PhishingEmailExample.png" alt="Example Phishing Email">
+        <form id="training-form">
+    <div class="question">
+        <label for="question1"><b>What is unusual about where this email came from?</b></label><br>
+        <input type="radio" id="question1-option1" name="question1" value="Amazon">
+        <label for="question1-option1">Its from Amazon</label><br>
+        <input type="radio" id="question1-option2" name="question1" value="Do Not Reply">
+        <label for="question1-option2">It says do-not-reply in the email</label><br>
+        <input type="radio" id="question1-option3" name="question1" value="AppOnline" data-correct="true">
+        <label for="question1-option3" class="correct">It says @apponline.info</label><br>
+        <div class="wrong">WRONG!</div>
+        <div class="correctanswer">CORRECT!</div>
+        <div class="explanation" id="explanation1">Explanation: It's unusual because the email address does not match the official Amazon domain.</div>
+    </div>
+
+    <div class="question">
+        <label for="question2"><b>Which of the following is the most dangerous part of the email?</b></label><br>
+        <input type="radio" id="question2-option1" name="question2" value="Black Friday Deals">
+        <label for="question2-option1">The reference to black Friday deals</label><br>
+        <input type="radio" id="question2-option2" name="question2" value="Amazon Customer">
+        <label for="question2-option2">They refer to you as an Amazon customer</label><br>
+        <input type="radio" id="question2-option3" name="question2" value="All Links" data-correct="true">
+        <label for="question2-option3" class="correct">All of the given links</label><br>
+        <div class="wrong">WRONG!</div>
+        <div class="correctanswer">CORRECT!</div>
+        <div class="explanation" id="explanation2">Explanation: All links can potentially lead to phishing websites or malware.</div>
+    </div>
+
+    <div class="question">
+        <label for="question3"><b>If this was a phishing email, what might come next after clicking one of the links?</b></label><br>
+        <input type="radio" id="question3-option1" name="question3" value="Best Buy">
+        <label for="question3-option1">It takes you to a Best Buy website</label><br>
+        <input type="radio" id="question3-option2" name="question3" value="Amazon Sign In" data-correct="true">
+        <label for="question3-option2" class="correct">It takes you to an Amazon sign in screen</label><br>
+        <input type="radio" id="question3-option3" name="question3" value="Nothing Happens">
+        <label for="question3-option3">Nothing happens</label><br>
+        <div class="wrong">WRONG!</div>
+        <div class="correctanswer">CORRECT!</div>
+        <div class="explanation" id="explanation3">Explanation: Phishing emails often lead to fake login pages.</div>
+    </div>
+
+    <div class="question">
+        <label for="question4"><b>If the link takes you to a sign in page, why might this be?</b></label><br>
+        <input type="radio" id="question4-option1" name="question4" value="Steal Information" data-correct="true">
+        <label for="question4-option1" class="correct">To steal your sign in information</label><br>
+        <input type="radio" id="question4-option2" name="question4" value="Help Sign In">
+        <label for="question4-option2">To help you sign into Amazon</label><br>
+        <input type="radio" id="question4-option3" name="question4" value="Education">
+        <label for="question4-option3">To educate you about phishing emails</label><br>
+        <div class="wrong">WRONG!</div>
+        <div class="correctanswer">CORRECT!</div>
+        <div class="explanation" id="explanation4">Explanation: Fake login pages are often used to steal credentials</div>
+    </div>
+</form>
+
+</div>
+
+<script>
+    // Select all radio buttons
+    const radioButtons = document.querySelectorAll('input[type="radio"]');
+
+    // Add event listener to each radio button
+    radioButtons.forEach((radioButton) => {
+        radioButton.addEventListener('click', function() {
+            // Get the parent container of the radio button
+            const parentContainer = this.parentNode;
+
+            // Select the 'WRONG!', 'CORRECT!', and 'explanation' divs
+            const wrongDiv = parentContainer.querySelector('.wrong');
+            const correctDiv = parentContainer.querySelector('.correctanswer');
+            const explanationDiv = parentContainer.querySelector('.explanation');
+
+            // Check if the clicked radio button is correct
+            if (this.dataset.correct) {
+                // If correct, hide 'WRONG!', show 'CORRECT!' and 'explanation'
+                wrongDiv.style.display = 'none';
+                correctDiv.style.display = 'block';
+                explanationDiv.style.display = 'block';
+            } else {
+                // If not correct, hide 'CORRECT!', 'explanation' and show 'WRONG!'
+                correctDiv.style.display = 'none';
+                explanationDiv.style.display = 'none';
+                wrongDiv.style.display = 'block';
+            }
+        });
+    });
+</script>
+</body>
+</html>
